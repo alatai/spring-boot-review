@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script type="text/javascript" th:src="@{js/index.js}"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <title>index</title>
+
+    <style>
+        h2 {
+            text-decoration: underline;
+            font-size: 0.9em;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+
+<div class="showing">
+    <h2>遍历radio</h2>
+    <input type="radio" name="product-radio"
+           th:each="product: ${products}"
+           th:value="${product.id}"
+           th:checked="${product.id == currentProduct.id}"
+           th:text="${product.name}">
+</div>
+
+<div class="showing">
+    <h2>遍历select</h2>
+    <label for="product-select"></label>
+    <select name="product-select" id="product-select">
+        <option th:each="product: ${products}"
+                th:value="${product.id}"
+                th:selected="${product.id == currentProduct.id}"
+                th:text="${product.name}">
+        </option>
+    </select>
+</div>
+
+<div class="showing">
+    <h2>带状态遍历</h2>
+    <table>
+        <thead>
+        <tr>
+            <td>id</td>
+            <td>name</td>
+            <td>price</td>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 状态存入status中 -->
+        <!-- status包含的属性 -->
+        <!-- index，0开始的索引 -->
+        <!-- count，1开始的索引 -->
+        <!-- size，集合内元素的总数 -->
+        <!-- current，当前迭代对象 -->
+        <!-- even/odd，boolean类型，判断是否奇数还是偶数 -->
+        <!-- first，boolean类型，是否是第一个 -->
+        <!-- last，boolean类型，是否是最后一个 -->
+        <tr th:class="${status.even} ? 'even' : 'odd'"
+            th:each="product, status: ${products}">
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.price}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="showing">
+    <h2>遍历</h2>
+    <table>
+        <thead>
+        <tr>
+            <td>id</td>
+            <td>name</td>
+            <td>price</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product: ${products}">
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.price}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="showing">
+    <h2>条件判断</h2>
+    <!-- 不只是布尔值的true和false，th:if表达式返回其他值时也会被认为是true或false -->
+    <!-- 数值类型不是0，返回true -->
+    <!-- 字符类型（char）并且不是0，返回true -->
+    <!-- String类型并且值不是false、off、no，返回true -->
+    <!-- 不是boolean、数值、字符、String的其他类型，返回true -->
+    <p th:if="${testBoolean}">如果testBoolean为true，显示</p>
+    <!-- 取反可以使用 -->
+    <!-- th:if -->
+    <!-- th:unless -->
+    <p th:if="${not testBoolean}">如果testBoolean为true，不显示</p>
+    <p th:if="not ${testBoolean}">如果testBoolean为true，不显示</p>
+    <p th:if="!${testBoolean}">如果testBoolean为true，不显示</p>
+    <p th:unless="${testBoolean}">如果testBoolean为true，不显示</p>
+    <!-- 三目运算 -->
+    <p th:text="${testBoolean} ? '当testBoolean为true时，显示' : 'false时，显示'"></p>
+</div>
+
+<div class="showing">
+    <h2>显示转义和非转义的html文本</h2>
+    <p th:text="${htmlContent}"></p>
+    <p th:utext="${htmlContent}"></p>
+</div>
+
+<div class="showing">
+    <h2>显示对象及对象属性</h2>
+    <p th:text="${currentProduct}"></p>
+    <p th:text="${currentProduct.name}"></p>
+    <p th:text="${currentProduct.getName()}"></p>
+</div>
+
+<div class="showing" th:object="${currentProduct}">
+    <h2>*{}方式显示属性</h2>
+    <p th:text="*{name}"></p>
+</div>
+
+<div class="showing">
+    <h2>算数运算</h2>
+    <p th:text="${currentProduct.price + 999}"></p>
+</div>
+
+<div class="showing">
+    <h2>包含其他文件/片段</h2>
+    <!-- th:replace，不要自己的主标签，保留th:fragment的主标签 -->
+    <div th:replace="test/common/include::footer1"></div>
+    <!-- th:insert，保留自己的主标签，保留th:fragment的主标签 -->
+    <div th:insert="test/common/include::footer2(2016, 2021)"></div>
+</div>
+
+</body>
+</html>

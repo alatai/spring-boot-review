@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alatai.mapper.CategoryMapper">
+
+    <!-- findAll -->
+    <select id="findAll" resultType="Category">
+        select *
+        from Category
+    </select>
+
+    <!-- findById -->
+    <select id="findById" parameterType="java.lang.Integer" resultType="Category">
+        select *
+        from Category
+        where id = #{id}
+    </select>
+
+    <!-- insert -->
+    <insert id="insert" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
+        insert into Category (name)
+        values (#{name})
+    </insert>
+
+    <!-- update -->
+    <update id="update" parameterType="Category">
+        update Category
+        set name = #{name}
+        where id = #{id}
+    </update>
+
+    <!-- delete -->
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete
+        from Category
+        where id = #{id}
+    </delete>
+</mapper>

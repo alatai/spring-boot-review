@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- 当以“/”为根路径是没有区别，但是 -->
+    <!-- th:href会自动生成上下文路径，寻找项目路径作为根路径 -->
+    <!-- href始终从端口开始作为根路径 -->
+    <link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+    <script type="text/javascript" src="js/index.js"></script>
+    <title>hello</title>
+
+    <script type="text/javascript">
+        testFunction();
+    </script>
+</head>
+<body>
+
+<div>
+    <!-- ognl（类似EL表达式），利用th:text属性取值 -->
+    <!-- th:text属性值替换标签的内容 -->
+    <span class="even" th:text="${name}">name</span>
+</div>
+
+<div class="showing">
+    <!-- 拼接字符串方式一：利用 + -->
+    <span th:text="'Hello! ' + ${name} + '!'">hello world</span>
+</div>
+
+<div>
+    <!-- 拼接字符串方式二：前后添加 | -->
+    <span th:text="|Hello! ${name}!|">hello world</span>
+</div>
+
+</body>
+</html>
